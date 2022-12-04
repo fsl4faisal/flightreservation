@@ -1,16 +1,12 @@
 package com.flight.entities;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
 @Entity
-@Getter
-@Setter
-@ToString
+@Data
 public class Passenger extends AbstractEntity{
     @Column(name = "first_name")
     private String firstName;

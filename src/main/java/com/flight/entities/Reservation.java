@@ -1,8 +1,6 @@
 package com.flight.entities;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,9 +8,7 @@ import javax.persistence.OneToOne;
 import java.sql.Timestamp;
 
 @Entity
-@Getter
-@Setter
-@ToString
+@Data
 public class Reservation extends AbstractEntity {
     @Column(name = "checked_in")
     private int checkedIn;

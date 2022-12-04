@@ -1,21 +1,17 @@
 package com.flight.entities;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
 @Entity
-@Getter
-@Setter
-@ToString
+@Data
 public class User extends AbstractEntity {
     @Column(name = "first_name")
-    String firstName;
+    private String firstName;
     @Column(name = "last_name")
-    String lastName;
-    String email;
-    String password;
+    private String lastName;
+    private String email;
+    private String password;
 }
