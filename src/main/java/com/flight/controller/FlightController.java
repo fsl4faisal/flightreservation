@@ -6,6 +6,8 @@ import com.flight.service.FlightService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,13 +29,19 @@ public class FlightController {
 
     //admin
     @PostMapping
-    public ResponseEntity<Flight> addFlight(@Valid @RequestBody Flight flight) {
+    public EntityModel<ResponseEntity<Flight>> addFlight(@Valid @RequestBody Flight flight) {
         var savedFlight = flightService.addFlight(flight);
         var uri = ServletUriComponentsBuilder.fromCurrentRequestUri()
                 .path("/{id}")
                 .buildAndExpand(savedFlight.getId())
                 .toUri();
-        return ResponseEntity.created(uri).build();
+        var v = ResponseEntity.created(uri).build();
+        var responseEntity = ResponseEntity.ok(savedFlight);
+
+        var entityModel = EntityModel.of(responseEntity);
+        var link = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(this.getClass()).getFlights());
+        entityModel.add(link.withRel("all-flights"));
+        return entityModel;
     }
 
     @GetMapping
