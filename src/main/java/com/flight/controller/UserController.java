@@ -3,7 +3,12 @@ package com.flight.controller;
 import com.flight.entities.User;
 import com.flight.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,5 +33,13 @@ public class UserController {
     @PostMapping("/login")
     public boolean login(@RequestParam("username") String username, @RequestParam("password") String password) {
         return userService.login(username, password);
+    }
+
+    @GetMapping("/users/find")
+    public List<User> findUsers(@RequestParam(required = false) String firstName,
+                                @RequestParam(required = false) String lastName,
+                                @RequestParam(required = false) String email
+    ) {
+        return userService.searchUsers(firstName, lastName, email);
     }
 }
